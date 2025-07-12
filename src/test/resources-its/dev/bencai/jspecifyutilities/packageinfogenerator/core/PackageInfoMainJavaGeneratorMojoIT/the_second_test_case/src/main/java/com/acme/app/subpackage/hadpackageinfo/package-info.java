@@ -1,0 +1,1 @@
+package com.acme.app.subpackage.hadpackageinfo;

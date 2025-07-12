@@ -1,0 +1,31 @@
+package dev.bencai.jspecifyutilities.packageinfogenerator.plugin;
+
+import dev.bencai.jspecifyutilities.packageinfogenerator.configuration.PackageInfoGeneratorContext;
+import dev.bencai.jspecifyutilities.packageinfogenerator.core.Engine;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import static dev.bencai.jspecifyutilities.packageinfogenerator.core.Constants.TEST_JAVA_DIRECTORY;
+import static dev.bencai.jspecifyutilities.packageinfogenerator.core.Constants.TEST_OUTPUT_DIRECTORY;
+
+/**
+ * Mojo to generate or update package-info.java files
+ * with @NullMarked or @NullUnmarked from JSpecify.
+ */
+@Mojo(name = "generate-package-info-test", defaultPhase = LifecyclePhase.GENERATE_TEST_SOURCES)
+public class JSpecifyPackageInfoTestJavaGeneratorGeneratorMojo extends AbstractJSpecifyPackageInfoGeneratorMojo {
+
+    @Override
+    public void execute() throws MojoExecutionException {
+        final Path testSourceDirectory = Paths.get(project.getBasedir().getPath(), TEST_JAVA_DIRECTORY);
+        final Path generatedTestSourcesDirectory = Paths.get(project.getBuild().getDirectory(), TEST_OUTPUT_DIRECTORY);
+        final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(project, getLog(), skip, annotation, testSourceDirectory, generatedTestSourcesDirectory);
+
+        Engine.run(context);
+    }
+
+}
