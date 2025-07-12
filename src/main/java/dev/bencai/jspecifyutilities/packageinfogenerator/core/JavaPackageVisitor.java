@@ -1,6 +1,6 @@
 package dev.bencai.jspecifyutilities.packageinfogenerator.core;
 
-import dev.bencai.jspecifyutilities.packageinfogenerator.PathUtils;
+import dev.bencai.jspecifyutilities.packageinfogenerator.utils.PathUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.maven.plugin.logging.Log;
 
