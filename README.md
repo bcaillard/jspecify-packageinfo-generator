@@ -60,4 +60,4 @@ Add the plugin to your `pom.xml`:
 ## Be careful with Maven Compiler Plugin
 
 Since version `3.12.0`, there's a regression that makes it impossible to use generated-sources.
-See [MCOMPILER-538](https://github.com/apache/maven-compiler-plugin/pull/191#issuecomment-1868145349).
+See [MCOMPILER-538](https://github.com/apache/maven-compiler-plugin/pull/191).
