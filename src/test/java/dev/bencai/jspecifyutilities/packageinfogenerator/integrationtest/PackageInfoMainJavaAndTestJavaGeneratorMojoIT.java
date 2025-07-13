@@ -1,4 +1,4 @@
-package dev.bencai.jspecifyutilities.packageinfogenerator.core;
+package dev.bencai.jspecifyutilities.packageinfogenerator.integrationtest;
 
 import com.soebes.itf.extension.assertj.MavenExecutionResultAssert;
 import com.soebes.itf.jupiter.extension.MavenCLIOptions;
@@ -8,6 +8,7 @@ import com.soebes.itf.jupiter.extension.MavenOption;
 import com.soebes.itf.jupiter.extension.MavenTest;
 import com.soebes.itf.jupiter.maven.MavenExecutionResult;
 import com.soebes.itf.jupiter.maven.MavenProjectResult;
+import dev.bencai.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorConstants;
 import org.assertj.core.api.Assertions;
 
 import java.io.IOException;
@@ -17,8 +18,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * Tests for {@link dev.bencai.jspecifyutilities.packageinfogenerator.plugin.JSpecifyPackageInfoMainJavaGeneratorGeneratorMojo} and
- * {@link dev.bencai.jspecifyutilities.packageinfogenerator.plugin.JSpecifyPackageInfoTestJavaGeneratorGeneratorMojo}.
+ * <p>Tests for {@link dev.bencai.jspecifyutilities.packageinfogenerator.plugin.JSpecifyPackageInfoMainJavaGeneratorGeneratorMojo} and
+ * {@link dev.bencai.jspecifyutilities.packageinfogenerator.plugin.JSpecifyPackageInfoTestJavaGeneratorGeneratorMojo}.</p>
+ * <p>Should generate {@code package-info.java} files for main and test sources directories.</p>
  */
 @MavenJupiterExtension
 class PackageInfoMainJavaAndTestJavaGeneratorMojoIT {
@@ -29,8 +31,7 @@ class PackageInfoMainJavaAndTestJavaGeneratorMojoIT {
     @MavenGoal("${project.groupId}:${project.artifactId}:${project.version}:generate-package-info")
     @MavenGoal("${project.groupId}:${project.artifactId}:${project.version}:generate-package-info-test")
     void generate_from_main_and_test_sources_directories_test_case(final MavenExecutionResult result) throws Exception {
-        MavenExecutionResultAssert.assertThat(result)
-                                  .isSuccessful();
+        MavenExecutionResultAssert.assertThat(result).isSuccessful();
 
         final MavenProjectResult project = result.getMavenProjectResult();
         final Path targetProjectDirectory = project.getTargetProjectDirectory();
@@ -70,7 +71,7 @@ class PackageInfoMainJavaAndTestJavaGeneratorMojoIT {
 
     private long countPackageInfoFiles(final Path directory) throws IOException {
         try (final Stream<Path> paths = Files.walk(directory)) {
-            return paths.filter(p -> p.getFileName().toString().equals(Constants.PACKAGE_INFO_FILENAME))
+            return paths.filter(p -> p.getFileName().toString().equals(PackageInfoGeneratorConstants.PACKAGE_INFO_FILENAME))
                         .count();
         }
     }

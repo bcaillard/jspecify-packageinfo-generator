@@ -15,8 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static dev.bencai.jspecifyutilities.packageinfogenerator.core.Constants.MAIN_JAVA_DIRECTORY;
-import static dev.bencai.jspecifyutilities.packageinfogenerator.core.Constants.MAIN_OUTPUT_DIRECTORY;
+import static dev.bencai.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorConstants.MAIN_JAVA_DIRECTORY;
+import static dev.bencai.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorConstants.MAIN_OUTPUT_DIRECTORY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.argThat;
 import static org.mockito.Mockito.times;

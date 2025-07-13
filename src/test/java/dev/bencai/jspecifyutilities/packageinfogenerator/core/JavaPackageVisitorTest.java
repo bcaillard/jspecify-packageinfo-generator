@@ -38,7 +38,7 @@ class JavaPackageVisitorTest {
     @Test
     void should_skip_java_package_when_it_already_contains_PackageInfo() throws IOException {
         // Arrange
-        final Path packageInfoFile = tmpDir.resolve(Constants.PACKAGE_INFO_FILENAME);
+        final Path packageInfoFile = tmpDir.resolve(PackageInfoGeneratorConstants.PACKAGE_INFO_FILENAME);
         Files.createFile(packageInfoFile);
 
         // Act

@@ -9,13 +9,10 @@ import org.apache.maven.plugins.annotations.Mojo;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static dev.bencai.jspecifyutilities.packageinfogenerator.core.Constants.MAIN_JAVA_DIRECTORY;
-import static dev.bencai.jspecifyutilities.packageinfogenerator.core.Constants.MAIN_OUTPUT_DIRECTORY;
+import static dev.bencai.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorConstants.MAIN_JAVA_DIRECTORY;
+import static dev.bencai.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorConstants.MAIN_OUTPUT_DIRECTORY;
 
-/**
- * Mojo to generate or update package-info.java files
- * with @NullMarked or @NullUnmarked from JSpecify.
- */
+/** Maven plugin for generating {@code package-info.java} files with JSpecify annotation from java main source directory. */
 @Mojo(name = "generate-package-info", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class JSpecifyPackageInfoMainJavaGeneratorGeneratorMojo extends AbstractJSpecifyPackageInfoGeneratorMojo {
 

@@ -7,8 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-import static dev.bencai.jspecifyutilities.packageinfogenerator.core.Constants.JAVA_EXTENSION;
-import static dev.bencai.jspecifyutilities.packageinfogenerator.core.Constants.PACKAGE_INFO_FILENAME;
+import static dev.bencai.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorConstants.JAVA_EXTENSION;
+import static dev.bencai.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorConstants.PACKAGE_INFO_FILENAME;
 
 /**
  * Utility class providing methods for working with file paths.

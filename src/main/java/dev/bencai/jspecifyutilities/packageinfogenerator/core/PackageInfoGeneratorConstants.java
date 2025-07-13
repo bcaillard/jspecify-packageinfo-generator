@@ -4,8 +4,9 @@ import lombok.experimental.UtilityClass;
 
 import java.io.File;
 
+/** Contains constant values used throughout the Maven plugin execution process. */
 @UtilityClass
-public class Constants {
+public class PackageInfoGeneratorConstants {
 
     public static final String PACKAGE_INFO_FILENAME = "package-info.java";
     public static final String MAIN_JAVA_DIRECTORY = "src" + File.separator + "main" + File.separator + "java";

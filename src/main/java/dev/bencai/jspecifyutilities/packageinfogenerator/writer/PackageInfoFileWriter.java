@@ -10,18 +10,30 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static dev.bencai.jspecifyutilities.packageinfogenerator.core.Constants.PACKAGE_INFO_FILENAME;
-import static dev.bencai.jspecifyutilities.packageinfogenerator.core.Constants.PACKAGE_SEPARATOR;
+import static dev.bencai.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorConstants.PACKAGE_INFO_FILENAME;
+import static dev.bencai.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorConstants.PACKAGE_SEPARATOR;
 
+/**
+ * Utility class responsible for creating and writing {@code package-info.java} files for specified Java packages.
+ * This class aims to facilitate the automatic generation of annotated {@code package-info.java} files during build processes.
+ */
 @UtilityClass
 public class PackageInfoFileWriter {
 
-    public static void createPackageInfo(final PackageInfoGeneratorContext context, final Path sourceDirectory) {
+    /**
+     * Creates a {@code package-info.java} file for a specified Java package and writes it to the appropriate directory in the generated sources.
+     *
+     * @param context the context containing configuration and resources needed for package info generation, such as source and output directories, annotations, and logging utilities
+     * @param fromJavaPackage the path representing the full directory of the Java package for which the {@code package-info.java} file will be created
+     *
+     * @throws CantCreatePackageInfoException if an exception occurs during the creation or writing of the {@code package-info.java} file
+     */
+    public static void createPackageInfo(final PackageInfoGeneratorContext context, final Path fromJavaPackage) {
         final Log logger = context.getLog();
         final Path sourcesDirectory = context.getSourcesDirectory();
 
-        logger.debug("Java package fullpath: " + sourceDirectory);
-        final String packagePath = sourceDirectory.toString()
+        logger.debug("Java package fullpath: " + fromJavaPackage);
+        final String packagePath = fromJavaPackage.toString()
                                                   .replace(sourcesDirectory.toString(), "")
                                                   .replaceFirst(File.separator, "");
         logger.debug("Java package path only: " + packagePath);
@@ -46,6 +58,7 @@ public class PackageInfoFileWriter {
             Files.write(packageInfoFile, PackageInfoTemplateFileProvider.provideContent(context.getAnnotation().getAnnotationName(), packageNameOnly));
             logger.info(String.format("Created package-info.java with @%s annotation in package: %s", context.getAnnotation().getAnnotationName(), packageNameOnly));
         } catch (final IOException ioe) {
+            logger.error(String.format("Failed to write package-info.java files: %s", ioe.getMessage()));
             throw new CantCreatePackageInfoException("Failed to write package-info.java files", ioe);
         }
     }
