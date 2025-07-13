@@ -61,3 +61,7 @@ Add the plugin to your `pom.xml`:
 
 Since version `3.12.0`, there's a regression that makes it impossible to use generated-sources.
 See [MCOMPILER-538](https://github.com/apache/maven-compiler-plugin/pull/191).
+
+## License
+
+This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
