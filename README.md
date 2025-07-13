@@ -27,7 +27,7 @@ Add the plugin to your `pom.xml`:
 <build>
     <plugins>
         <plugin>
-            <groupId>dev.bencai.jspecify-utilities</groupId>
+            <groupId>io.github.bcaillard.jspecify-utilities</groupId>
             <artifactId>jspecify-packageinfo-generator-maven-plugin</artifactId>
             <version>(pick version)</version>
             <executions>
