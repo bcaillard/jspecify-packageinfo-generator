@@ -12,11 +12,14 @@ class PackageInfoTemplateFileProviderTest {
 
     @Test
     void should_return_correct_content_when_valid_annotationName_and_packageNameOnly_provided() {
+        // Arrange
         final String annotationName = JSpecifyAnnotationType.NULL_UNMARKED.getAnnotationName();
         final String packageNameOnly = "com.example.test";
 
+        // Act
         final byte[] actual = PackageInfoTemplateFileProvider.provideContent(annotationName, packageNameOnly);
 
+        // Assert
         assertThat(new String(actual, StandardCharsets.UTF_8).split(System.lineSeparator()))
                 .containsExactly(
                         "@org.jspecify.annotations.NullUnmarked",
