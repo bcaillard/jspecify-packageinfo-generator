@@ -23,7 +23,8 @@ If you discover JSpecify, remember to take a look at [NullAway](https://github.c
 
 Add the plugin to your `pom.xml`:
 
-```
+```xml
+
 <build>
     <plugins>
         <plugin>
