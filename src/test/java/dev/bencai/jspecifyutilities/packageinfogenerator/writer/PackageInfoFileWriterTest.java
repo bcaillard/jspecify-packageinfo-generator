@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 class PackageInfoFileWriterTest {
 
     @Mock
-    private Log logger;
+    private Log mockLog;
     @TempDir
     private Path tmpSourceDirectory;
     @TempDir
@@ -32,7 +32,7 @@ class PackageInfoFileWriterTest {
     @Test
     void should_create_package_info_file() {
         // Arrange
-        final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(null, logger, false, JSpecifyAnnotationType.NULL_MARKED, tmpSourceDirectory, tmpTargetDirectory);
+        final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(null, mockLog, false, JSpecifyAnnotationType.NULL_MARKED, tmpSourceDirectory, tmpTargetDirectory);
         final Path javaPackage = tmpSourceDirectory.resolve("src/main/java/foo/bar");
 
         // Act
@@ -47,7 +47,7 @@ class PackageInfoFileWriterTest {
     void should_throw_CantCreatePackageInfoException_when_IOException() {
         try (final MockedStatic<Files> filesMockedStatic = Mockito.mockStatic(Files.class)) {
             // Arrange
-            final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(null, logger, false, JSpecifyAnnotationType.NULL_MARKED, tmpSourceDirectory, tmpTargetDirectory);
+            final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(null, mockLog, false, JSpecifyAnnotationType.NULL_MARKED, tmpSourceDirectory, tmpTargetDirectory);
             final Path javaPackage = tmpSourceDirectory.resolve("src/main/java/foo/bar");
 
             filesMockedStatic.when(() -> Files.createDirectories(any(Path.class)))
