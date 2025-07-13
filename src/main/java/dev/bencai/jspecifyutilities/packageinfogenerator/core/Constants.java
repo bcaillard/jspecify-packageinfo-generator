@@ -11,7 +11,7 @@ public class Constants {
     public static final String MAIN_JAVA_DIRECTORY = "src" + File.separator + "main" + File.separator + "java";
     public static final String TEST_JAVA_DIRECTORY = "src" + File.separator + "test" + File.separator + "java";
     public static final String MAIN_OUTPUT_DIRECTORY = "generated-sources/annotations/packages-info";
-    public static final String TEST_OUTPUT_DIRECTORY = "generated-test-sources/annotations/packages-info";
+    public static final String TEST_OUTPUT_DIRECTORY = "generated-test-sources/test-annotations/packages-info";
     public static final String JAVA_EXTENSION = ".java";
     public static final char PACKAGE_SEPARATOR = '.';
 

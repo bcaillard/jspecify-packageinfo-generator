@@ -32,10 +32,10 @@ public class JavaPackageVisitor extends SimpleFileVisitor<Path> {
         boolean skipDirectory = false;
 
         if (PathUtils.isPackageInfoFileExists(dir)) {
-            log.info(String.format("Package Info already exists. Skipping directory: %s", dir));
+            log.debug(String.format("Package Info already exists. Skipping directory: %s", dir));
             skipDirectory = true;
         } else if (!PathUtils.hasJavaSourceFiles(dir)) {
-            log.info(String.format("No Java files. Skipping directory: %s", dir));
+            log.debug(String.format("No Java files. Skipping directory: %s", dir));
             skipDirectory = true;
         }
 

@@ -1,7 +1,7 @@
 package dev.bencai.jspecifyutilities.packageinfogenerator.plugin;
 
 import dev.bencai.jspecifyutilities.packageinfogenerator.configuration.PackageInfoGeneratorContext;
-import dev.bencai.jspecifyutilities.packageinfogenerator.core.Engine;
+import dev.bencai.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorEngine;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -25,7 +25,7 @@ public class JSpecifyPackageInfoTestJavaGeneratorGeneratorMojo extends AbstractJ
         final Path generatedTestSourcesDirectory = Paths.get(project.getBuild().getDirectory(), TEST_OUTPUT_DIRECTORY);
         final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(project, getLog(), skip, annotation, testSourceDirectory, generatedTestSourcesDirectory);
 
-        Engine.run(context);
+        PackageInfoGeneratorEngine.generate(context);
     }
 
 }

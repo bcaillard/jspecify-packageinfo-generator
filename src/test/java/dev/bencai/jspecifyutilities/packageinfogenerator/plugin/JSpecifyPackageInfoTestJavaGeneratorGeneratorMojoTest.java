@@ -1,7 +1,7 @@
 package dev.bencai.jspecifyutilities.packageinfogenerator.plugin;
 
 import dev.bencai.jspecifyutilities.packageinfogenerator.configuration.JSpecifyAnnotationType;
-import dev.bencai.jspecifyutilities.packageinfogenerator.core.Engine;
+import dev.bencai.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorEngine;
 import org.apache.maven.model.Build;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
@@ -49,12 +49,12 @@ class JSpecifyPackageInfoTestJavaGeneratorGeneratorMojoTest {
         final Path expectedSourceDirectory = Paths.get("/project/base", TEST_JAVA_DIRECTORY);
         final Path expectedGeneratedSourcesDirectory = Paths.get("/project/build", TEST_OUTPUT_DIRECTORY);
 
-        try (final MockedStatic<Engine> mockedEngine = Mockito.mockStatic(Engine.class)) {
+        try (final MockedStatic<PackageInfoGeneratorEngine> mockedEngine = Mockito.mockStatic(PackageInfoGeneratorEngine.class)) {
             // Act
             mojo.execute();
 
             // Assert
-            mockedEngine.verify(() -> Engine.run(argThat(context -> {
+            mockedEngine.verify(() -> PackageInfoGeneratorEngine.generate(argThat(context -> {
                 assertThat(context).isNotNull();
                 assertThat(context.getProject()).isEqualTo(mockProject);
                 assertThat(context.getLog()).isEqualTo(mockLog);

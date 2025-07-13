@@ -10,9 +10,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @UtilityClass
-public class Engine {
+public class PackageInfoGeneratorEngine {
 
-    public static void run(final PackageInfoGeneratorContext context) throws MojoExecutionException {
+    public static void generate(final PackageInfoGeneratorContext context) throws MojoExecutionException {
         final Log logger = context.getLog();
         final Path sourcesDirectory = context.getSourcesDirectory();
 
@@ -25,7 +25,7 @@ public class Engine {
             try {
                 final JavaPackageVisitor javaPackageVisitor = new JavaPackageVisitor(logger, p -> PackageInfoFileWriter.createPackageInfo(context, p));
                 Files.walkFileTree(sourcesDirectory, javaPackageVisitor);
-                logger.debug("package-info.java files generated");
+                logger.debug("All package-info.java files have been generated");
             } catch (final Exception ex) {
                 throw new MojoExecutionException("Failed to generate package-info.java files. Error occurred during files generation process", ex);
             }
