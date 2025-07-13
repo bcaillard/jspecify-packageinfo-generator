@@ -26,10 +26,10 @@ jobs:
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
       - name: Build with Maven
-        run: mvn -B package
+        run: mvn -B --errors -no-transfer-progress package
 
       - name: Publish to Apache Maven Central
-        run: mvn deploy -Prelease
+        run: mvn -B --errors -no-transfer-progress deploy -Prelease
         env:
           MAVEN_USERNAME: ${{ secrets.NEXUS_USERNAME }}
           MAVEN_CENTRAL_TOKEN: ${{ secrets.NEXUS_PASSWORD }}
