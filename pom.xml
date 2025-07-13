@@ -18,7 +18,15 @@
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <maven.compiler.release>${java.version}</maven.compiler.release>
 
-        <!-- Libs -->
+        <!-- Dependencies -->
+        <assertj-core.version>3.27.3</assertj-core.version>
+        <error-prone-core.version>2.31.0</error-prone-core.version>
+        <junit-jupiter-engine.version>5.13.3</junit-jupiter-engine.version>
+        <lombok.version>1.18.38</lombok.version>
+        <mockito-junit-jupiter.version>5.17.0</mockito-junit-jupiter.version>
+        <soebes-itf-jupiter-extension.version>0.13.1</soebes-itf-jupiter-extension.version>
+
+        <!-- Plugins -->
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-core.version>3.9.10</maven-core.version>
         <maven-failsafe-plugin.version>3.5.3</maven-failsafe-plugin.version>
@@ -30,6 +38,15 @@
     </properties>
 
     <dependencies>
+        <!-- optional -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- scope(provided) -->
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-core</artifactId>
@@ -49,41 +66,35 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.36</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.27.3</version>
-            <scope>test</scope>
-        </dependency>
+        <!-- scope(test) -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.13.3</version>
+            <version>${junit-jupiter-engine.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj-core.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>5.17.0</version>
+            <version>${mockito-junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.soebes.itf.jupiter.extension</groupId>
             <artifactId>itf-assertj</artifactId>
-            <version>0.13.1</version>
+            <version>${soebes-itf-jupiter-extension.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.soebes.itf.jupiter.extension</groupId>
             <artifactId>itf-jupiter-extension</artifactId>
-            <version>0.13.1</version>
+            <version>${soebes-itf-jupiter-extension.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -101,16 +112,26 @@
         </testResources>
 
         <plugins>
+            <!-- Compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
+                    <compilerArgs>
+                        <arg>-XDcompilePolicy=simple</arg>
+                        <arg>-Xplugin:ErrorProne -XepDisableWarningsInGeneratedCode</arg>
+                    </compilerArgs>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.36</version>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>com.google.errorprone</groupId>
+                            <artifactId>error_prone_core</artifactId>
+                            <version>${error-prone-core.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
@@ -155,10 +176,11 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <!-- Integration Testing Framework For Maven Plugins -->
             <plugin>
                 <groupId>com.soebes.itf.jupiter.extension</groupId>
                 <artifactId>itf-maven-plugin</artifactId>
-                <version>0.13.1</version>
+                <version>${soebes-itf-jupiter-extension.version}</version>
                 <executions>
                     <execution>
                         <id>installing</id>

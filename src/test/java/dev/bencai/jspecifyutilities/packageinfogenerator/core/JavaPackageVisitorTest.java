@@ -26,12 +26,12 @@ class JavaPackageVisitorTest {
     @InjectMocks
     private JavaPackageVisitor javaPackageVisitor;
     @Mock
+    @SuppressWarnings("unused")
     private Log mockLog;
     @Mock
     private BasicFileAttributes mockAttributes;
     @Mock
-    private Consumer<Path> consumer = path -> {
-    };
+    private Consumer<Path> consumer;
     @TempDir
     private Path tmpDir;
 
