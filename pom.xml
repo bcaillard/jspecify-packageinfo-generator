@@ -454,9 +454,7 @@
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>${maven-javadoc-plugin.version}</version>
                         <configuration>
-                            <additionalJOptions>
-                                <additionalJOption>-Xdoclint:all,-missing</additionalJOption>
-                            </additionalJOptions>
+                            <failOnWarnings>true</failOnWarnings>
                         </configuration>
                         <executions>
                             <execution>
