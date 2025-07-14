@@ -23,12 +23,16 @@ jobs:
       - name: Get Maven project version
         id: get_version
         run: |
-          mvn build-helper:parse-version versions:set@release
+          mvn $MAVEN_CLI_OPTS build-helper:parse-version versions:set@release
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "VERSION=$VERSION"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git add pom.xml
           git commit -m "build(release): Version $VERSION"
+        env:
+          MAVEN_CLI_OPTS: ${{ env.MAVEN_CLI_OPTS }}
 
       - name: Create Git tag
         run: |
@@ -40,8 +44,10 @@ jobs:
       - name: Next Development Version
         run: |
           git reset --head HEAD^
-          mvn build-helper:parse-version versions:set@minor
+          mvn $MAVEN_CLI_OPTS build-helper:parse-version versions:set@minor
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "VERSION=$VERSION"
           git add pom.xml
           git commit -m "build(development): Next Development Version $VERSION"
+        env:
+          MAVEN_CLI_OPTS: ${{ env.MAVEN_CLI_OPTS }}
