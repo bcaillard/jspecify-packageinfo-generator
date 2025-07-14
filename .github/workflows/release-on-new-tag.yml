@@ -50,10 +50,10 @@ jobs:
         id: release-changelog
         uses: janheinrichmerker/action-github-changelog-generator@v2.3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_GIT_PUSH_AND_TAG }}
 
       - name: Create Release
-        uses: comnoco/create-release@v2
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_GIT_PUSH_AND_TAG }}
         with:
