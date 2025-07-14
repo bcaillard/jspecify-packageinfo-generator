@@ -49,7 +49,7 @@ jobs:
           VERSION=$(mvn $MAVEN_CLI_OPTS help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "VERSION=$VERSION"
           git add pom.xml
-          git commit -m "build(development): Next Development Version $VERSION"
-          git push origin ${GITHUB_REF##*/} -o ci.skip
+          git commit -m "build(development): Next Development Version $VERSION [no ci]"
+          git push origin ${GITHUB_REF##*/}
         env:
           MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
