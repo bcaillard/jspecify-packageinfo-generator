@@ -1,4 +1,4 @@
-name: Release
+name: Release to Maven Central
 
 on:
   push:
@@ -31,7 +31,7 @@ jobs:
           echo "Nom du tag : ${{ github.ref_name }}"
 
       - name: Publish to Apache Maven Central
-        run: mvn $MAVEN_CLI_OPTS deploy -Prelease -Dmaven.test.skip=true
+        run: mvn $MAVEN_CLI_OPTS deploy -Prelease -Dmaven.test.skip=true -Dmaven.install.skip=true
         env:
           MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
           MAVEN_USERNAME: ${{ secrets.NEXUS_USERNAME }}

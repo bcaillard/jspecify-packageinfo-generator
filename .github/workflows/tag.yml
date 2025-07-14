@@ -1,7 +1,7 @@
-name: Tag from Maven Version
+name: Create a tag from current Maven version
 
 on:
-  workflow_dispatch: # déclenchement manuel uniquement
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -26,28 +26,24 @@ jobs:
       - name: Set up Git
         uses: actions4git/setup-git@v1
 
-      - name: Get Maven project version
-        id: get_version
+      - name: Create Git tag from current Maven version
         run: |
-          echo "MAVEN_CLI_OPTS=$MAVEN_CLI_OPTS"
+          # x.y.z-SNAPSHOT -> x.y.z
           mvn $MAVEN_CLI_OPTS build-helper:parse-version versions:set@release
           VERSION=$(mvn $MAVEN_CLI_OPTS help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "VERSION=$VERSION"
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
           git add pom.xml
           git commit -m "build(release): Version $VERSION"
-        env:
-          MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
-
-      - name: Create Git tag
-        run: |
-          TAG="v${{ steps.get_version.outputs.version }}"
+          TAG="v$VERSION"
           echo "Tag to create: $TAG"
           git tag $TAG
           git push origin $TAG
+        env:
+          MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
 
       - name: Next Development Version
         run: |
+          # Remove commit created with tag version
           git reset --hard HEAD^
           mvn $MAVEN_CLI_OPTS build-helper:parse-version versions:set@minor
           VERSION=$(mvn $MAVEN_CLI_OPTS help:evaluate -Dexpression=project.version -q -DforceStdout)
