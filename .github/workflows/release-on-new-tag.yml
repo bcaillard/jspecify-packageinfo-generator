@@ -46,11 +46,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      #      - name: Generate release changelog
-      #        id: release-changelog
-      #        uses: janheinrichmerker/action-github-changelog-generator@v2.3
-      #        with:
-      #          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate release changelog
+        id: release-changelog
+        uses: janheinrichmerker/action-github-changelog-generator@v2.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release
+        uses: comnoco/create-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_GIT_PUSH_AND_TAG }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ${{ steps.release-changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
 
       - name: Create Release
         uses: release-drafter/release-drafter@v6
