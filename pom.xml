@@ -21,12 +21,13 @@
 
     <groupId>io.github.bcaillard.jspecify-utilities</groupId>
     <artifactId>jspecify-packageinfo-generator-maven-plugin</artifactId>
-    <version>0.20.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>JSpecify Utilities :: Package-Info Generator Maven Plugin</name>
     <description>
-        Maven plugin automatically generates package-info.java files with JSpecify annotations (@NullMarked or @NullUnmarked), helping you manage nullness boundaries in your Java
+        Maven plugin automatically generates package-info.java files with JSpecify annotations (@NullMarked or
+        @NullUnmarked), helping you manage nullness boundaries in your Java
         projects without manual boilerplate.
     </description>
     <url>https://github.com/bcaillard/jspecify-packageinfo-generator</url>
@@ -197,7 +198,8 @@
                         <configurationParameters>
                             junit.jupiter.execution.parallel.enabled = true
                             junit.jupiter.execution.parallel.mode.default = concurrent
-                            junit.jupiter.displayname.generator.default = org.junit.jupiter.api.DisplayNameGenerator$ReplaceUnderscores
+                            junit.jupiter.displayname.generator.default =
+                            org.junit.jupiter.api.DisplayNameGenerator$ReplaceUnderscores
                         </configurationParameters>
                     </properties>
                     <parallel>all</parallel>
@@ -208,7 +210,8 @@
                     <consoleOutputReporter>
                         <disable>true</disable>
                     </consoleOutputReporter>
-                    <statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter">
+                    <statelessTestsetInfoReporter
+                            implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter">
                         <printStacktraceOnError>true</printStacktraceOnError>
                         <printStacktraceOnFailure>true</printStacktraceOnFailure>
                         <printStdoutOnError>true</printStdoutOnError>
@@ -240,7 +243,8 @@
                     </systemPropertyVariables>
                     <properties>
                         <configurationParameters>
-                            junit.jupiter.displayname.generator.default = org.junit.jupiter.api.DisplayNameGenerator$ReplaceUnderscores
+                            junit.jupiter.displayname.generator.default =
+                            org.junit.jupiter.api.DisplayNameGenerator$ReplaceUnderscores
                         </configurationParameters>
                     </properties>
                     <includes>
@@ -250,7 +254,8 @@
                     <consoleOutputReporter>
                         <disable>true</disable>
                     </consoleOutputReporter>
-                    <statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter">
+                    <statelessTestsetInfoReporter
+                            implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter">
                         <printStacktraceOnError>true</printStacktraceOnError>
                         <printStacktraceOnFailure>true</printStacktraceOnFailure>
                         <printStdoutOnError>true</printStdoutOnError>
@@ -292,7 +297,9 @@
                             <goal>set</goal>
                         </goals>
                         <configuration>
-                            <newVersion>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}</newVersion>
+                            <newVersion>
+                                ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}
+                            </newVersion>
                         </configuration>
                     </execution>
                     <execution>
@@ -310,7 +317,8 @@
                             <goal>set</goal>
                         </goals>
                         <configuration>
-                            <newVersion>${parsedVersion.majorVersion}.${parsedVersion.nextMinorVersion}.0-SNAPSHOT</newVersion>
+                            <newVersion>${parsedVersion.majorVersion}.${parsedVersion.nextMinorVersion}.0-SNAPSHOT
+                            </newVersion>
                         </configuration>
                     </execution>
                     <execution>
@@ -319,7 +327,9 @@
                             <goal>set</goal>
                         </goals>
                         <configuration>
-                            <newVersion>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}-SNAPSHOT</newVersion>
+                            <newVersion>
+                                ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}-SNAPSHOT
+                            </newVersion>
                         </configuration>
                     </execution>
                 </executions>
