@@ -227,22 +227,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <!-- Integration Testing Framework For Maven Plugins -->
-            <plugin>
-                <groupId>com.soebes.itf.jupiter.extension</groupId>
-                <artifactId>itf-maven-plugin</artifactId>
-                <version>${itf-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>installing</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>install</goal>
-                            <goal>resources-its</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <!-- Failsafe -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -344,6 +328,34 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>integration-tests</id>
+            <activation>
+                <property>
+                    <name>!maven.test.skip</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- Integration Testing Framework For Maven Plugins -->
+                    <plugin>
+                        <groupId>com.soebes.itf.jupiter.extension</groupId>
+                        <artifactId>itf-maven-plugin</artifactId>
+                        <version>${itf-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>installing</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>install</goal>
+                                    <goal>resources-its</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>coverage</id>
             <build>
