@@ -30,10 +30,3 @@ jobs:
         run: mvn $MAVEN_CLI_OPTS package -Pcoverage
         env:
           MAVEN_CLI_OPTS: ${{ env.MAVEN_CLI_OPTS }}
-
-#      - name: Publish to Apache Maven Central
-#        run: mvn -B --errors -no-transfer-progress deploy -Prelease -Dmaven.test.skip=true
-#        env:
-#          MAVEN_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-#          MAVEN_CENTRAL_TOKEN: ${{ secrets.NEXUS_PASSWORD }}
-#          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
