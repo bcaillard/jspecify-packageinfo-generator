@@ -45,7 +45,7 @@ jobs:
 
       - name: Next Development Version
         run: |
-          git reset --head HEAD^
+          git reset --hard HEAD^
           mvn $MAVEN_CLI_OPTS build-helper:parse-version versions:set@minor
           VERSION=$(mvn $MAVEN_CLI_OPTS help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "VERSION=$VERSION"
