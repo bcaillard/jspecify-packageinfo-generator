@@ -1,0 +1,47 @@
+name: Tag from Maven Version
+
+on:
+  workflow_dispatch: # déclenchement manuel uniquement
+
+permissions:
+  contents: write
+
+jobs:
+  tag-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Get Maven project version
+        id: get_version
+        run: |
+          mvn build-helper:parse-version versions:set@release
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "VERSION=$VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          git add pom.xml
+          git commit -m "build(release): Version $VERSION"
+
+      - name: Create Git tag
+        run: |
+          TAG="v${{ steps.get_version.outputs.version }}"
+          echo "Tag to create: $TAG"
+          git tag $TAG
+          git push origin $TAG
+
+      - name: Next Development Version
+        run: |
+          git reset --head HEAD^
+          mvn build-helper:parse-version versions:set@minor
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "VERSION=$VERSION"
+          git add pom.xml
+          git commit -m "build(development): Next Development Version $VERSION"
