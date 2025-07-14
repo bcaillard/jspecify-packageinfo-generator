@@ -30,7 +30,6 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git status
           git add pom.xml
           git commit -m "build(release): Version $VERSION"
         env:
@@ -51,5 +50,6 @@ jobs:
           echo "VERSION=$VERSION"
           git add pom.xml
           git commit -m "build(development): Next Development Version $VERSION"
+          git push origin ${GITHUB_REF##*/}
         env:
           MAVEN_CLI_OPTS: ${{ env.MAVEN_CLI_OPTS }}

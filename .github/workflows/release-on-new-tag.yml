@@ -1,9 +1,9 @@
-name: Build on Tag
+name: Release
 
 on:
   push:
     tags:
-      - 'v*'  # Se déclenche pour les tags commençant par 'v' (ex: v1.0.0)
+      - '*'
 
 jobs:
   build:
