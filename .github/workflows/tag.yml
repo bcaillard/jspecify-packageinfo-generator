@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.PAT_GIT_PUSH_AND_TAG }}
 
       - name: Set up JDK 11
         uses: actions/setup-java@v4
@@ -22,6 +20,9 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
+
+      - name: Set up Git
+        uses: actions4git/setup-git@v1
 
       - name: Get Maven project version
         id: get_version
@@ -34,7 +35,7 @@ jobs:
           git add pom.xml
           git commit -m "build(release): Version $VERSION"
         env:
-          MAVEN_CLI_OPTS: ${{ env.MAVEN_CLI_OPTS }}
+          MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
 
       - name: Create Git tag
         run: |
@@ -53,4 +54,4 @@ jobs:
           git commit -m "build(development): Next Development Version $VERSION"
           git push origin ${GITHUB_REF##*/}
         env:
-          MAVEN_CLI_OPTS: ${{ env.MAVEN_CLI_OPTS }}
+          MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
