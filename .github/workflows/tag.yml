@@ -14,11 +14,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Java
+      - name: Set up JDK 11
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
           java-version: '11'
+          distribution: 'temurin'
 
       - name: Get Maven project version
         id: get_version
