@@ -1,0 +1,55 @@
+name: Create a tag from current Maven version
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  tag-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_GIT_PUSH_AND_TAG }}
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Set up Git
+        uses: actions4git/setup-git@v1
+
+      - name: Create Git tag from current Maven version
+        run: |
+          # x.y.z-SNAPSHOT -> x.y.z
+          mvn $MAVEN_CLI_OPTS build-helper:parse-version versions:set@release
+          VERSION=$(mvn $MAVEN_CLI_OPTS help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "VERSION=$VERSION"
+          git add pom.xml
+          git commit -m "build(release): Version $VERSION"
+          TAG="v$VERSION"
+          echo "Tag to create: $TAG"
+          git tag $TAG
+          git push origin $TAG
+        env:
+          MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
+
+      - name: Next Development Version
+        run: |
+          # Remove commit created with tag version
+          git reset --hard HEAD^
+          mvn $MAVEN_CLI_OPTS build-helper:parse-version versions:set@minor
+          VERSION=$(mvn $MAVEN_CLI_OPTS help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "VERSION=$VERSION"
+          git add pom.xml
+          git commit -m "build(development): Next Development Version $VERSION [no ci]"
+          git push origin ${GITHUB_REF##*/}
+        env:
+          MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}

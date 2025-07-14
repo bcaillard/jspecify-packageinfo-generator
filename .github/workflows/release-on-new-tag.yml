@@ -1,0 +1,75 @@
+name: Release to Maven Central
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+          server-id: central
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_CENTRAL_TOKEN
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+      - name: Display tag info
+        run: |
+          echo "Tag created : ${{ github.ref }}"
+          echo "Tage name : ${{ github.ref_name }}"
+
+      - name: Publish to Apache Maven Central
+        run: mvn $MAVEN_CLI_OPTS deploy -Prelease -Dmaven.test.skip=true -Dmaven.install.skip=true
+        env:
+          MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
+          MAVEN_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          MAVEN_CENTRAL_TOKEN: ${{ secrets.NEXUS_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+  github-release:
+    name: Create Github Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get previous tag
+        id: previous-tag
+        run: |
+          echo "currentTag: ${{ github.ref_name }}"
+          chmod +x .github/scripts/find_previous_tag.sh
+          .github/scripts/find_previous_tag.sh ${{ github.ref_name }}
+
+      - name: Update CHANGELOG
+        id: changelog
+        uses: requarks/changelog-action@v1
+        with:
+          token: ${{ secrets.PAT_GIT_PUSH_AND_TAG }}
+          fromTag: ${{ github.ref_name }}
+          toTag: ${{ steps.previous-tag.outputs.previousTag }}
+          writeToFile: false
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          allowUpdates: true
+          draft: false
+          makeLatest: true
+          name: ${{ github.ref_name }}
+          body: ${{ steps.changelog.outputs.changes }}
+          token: ${{ secrets.PAT_GIT_PUSH_AND_TAG }}

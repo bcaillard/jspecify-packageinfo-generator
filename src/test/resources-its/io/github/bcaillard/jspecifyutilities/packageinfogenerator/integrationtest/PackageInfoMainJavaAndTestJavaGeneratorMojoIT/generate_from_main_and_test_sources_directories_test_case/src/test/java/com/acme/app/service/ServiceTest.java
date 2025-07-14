@@ -1,0 +1,5 @@
+package io.github.bcaillard.jspecifyutilities.packageinfogenerator.integrationtest.PackageInfoMainJavaAndTestJavaGeneratorMojoIT.generate_from_main_and_test_sources_directories_test_case.src.test.java.com.acme.app.service;
+
+public class ServiceTest {
+
+}

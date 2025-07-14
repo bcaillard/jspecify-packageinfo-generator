@@ -1,0 +1,5 @@
+package io.github.bcaillard.jspecifyutilities.packageinfogenerator.integrationtest.PackageInfoMainJavaAndTestJavaGeneratorMojoIT.generate_from_main_and_test_sources_directories_test_case.src.main.java.com.acme.app.controller;
+
+public class Controller {
+
+}
