@@ -50,6 +50,7 @@ jobs:
         id: previous-tag
         run: |
           echo "currentTag: ${{ github.ref_name }}"
+          git tag -l | sort -r -V
           chmod +x .github/scripts/find_previous_tag.sh
           previousTag=$(.github/scripts/find_previous_tag.sh ${{ github.ref_name }})
           echo "previousTag: $previousTag"
