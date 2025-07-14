@@ -23,13 +23,13 @@
     <artifactId>jspecify-packageinfo-generator-maven-plugin</artifactId>
     <version>0.1.0</version>
     <packaging>maven-plugin</packaging>
+
     <name>JSpecify Utilities :: Package-Info Generator Maven Plugin</name>
-    <url>https://github.com/bcaillard/jspecify-packageinfo-generator</url>
     <description>
         Maven plugin automatically generates package-info.java files with JSpecify annotations (@NullMarked or @NullUnmarked), helping you manage nullness boundaries in your Java
         projects without manual boilerplate.
     </description>
-
+    <url>https://github.com/bcaillard/jspecify-packageinfo-generator</url>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -510,16 +510,6 @@
                     </plugin>
                 </plugins>
             </build>
-            <!--distributionManagement>
-                <snapshotRepository>
-                    <id>ossrh</id>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-                </snapshotRepository>
-                <repository>
-                    <id>ossrh</id>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                </repository>
-            </distributionManagement-->
         </profile>
     </profiles>
 
