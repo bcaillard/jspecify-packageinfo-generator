@@ -4,7 +4,7 @@ set -euo pipefail
 CURRENT_TAG="$1"
 
 if [[ ! "$CURRENT_TAG" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
-    echo "Le tag fourni ($CURRENT_TAG) n'est pas au format vX.Y.Z"
+    echo "The provided tag ($CURRENT_TAG) is not in vX.Y.Z format"
     exit 1
 fi
 
@@ -38,11 +38,9 @@ else
 fi
 
 if [[ -z "$PREVIOUS_TAG" ]]; then
-    echo "Aucun tag précédent trouvé, utilisation de 'main' comme référence"
-    REF="main"
+    echo "No previous tag found"
 else
-    echo "Tag précédent trouvé: $PREVIOUS_TAG"
-    REF="$PREVIOUS_TAG"
+    echo "Previous tag found: $PREVIOUS_TAG"
 fi
 
 echo "previousTag=$PREVIOUS_TAG" >> "$GITHUB_OUTPUT"
