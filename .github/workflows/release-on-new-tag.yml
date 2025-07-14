@@ -45,12 +45,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Get previous tag
         id: previous-tag
         run: |
           echo "currentTag: ${{ github.ref_name }}"
-          git tag -l | sort -r -V
+          results=$(git tag -l | sort -r -V)
+          echo "results: $results"
           chmod +x .github/scripts/find_previous_tag.sh
           previousTag=$(.github/scripts/find_previous_tag.sh ${{ github.ref_name }})
           echo "previousTag: $previousTag"
