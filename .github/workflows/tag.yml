@@ -50,6 +50,6 @@ jobs:
           echo "VERSION=$VERSION"
           git add pom.xml
           git commit -m "build(development): Next Development Version $VERSION"
-          git push origin ${GITHUB_REF##*/}
+          git push origin ${GITHUB_REF##*/} -o ci.skip
         env:
           MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}

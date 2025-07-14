@@ -44,26 +44,30 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Generate release changelog
-        id: release-changelog
-        uses: janheinrichmerker/action-github-changelog-generator@v2.3
+      - name: Get previous tag
+        id: previous-tag
+        run: |
+          previousTag=$(.github/scripts/find_previous_tag.sh ${{ github.ref_name }})
+          echo "previousTag: previousTag"
+          echo "previousTag=previousTag" >> "$GITHUB_OUTPUT"
+
+      - name: Update CHANGELOG
+        id: changelog
+        uses: requarks/changelog-action@v1
         with:
           token: ${{ secrets.PAT_GIT_PUSH_AND_TAG }}
+          fromTag: ${{ github.ref_name }}
+          toTag: ${{ steps.previous-tag.outputs.previousTag }}
+          writeToFile: false
 
       - name: Create Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_GIT_PUSH_AND_TAG }}
+        uses: ncipollo/release-action@v1.12.0
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: ${{ steps.release-changelog.outputs.changelog }}
-          draft: false
-          prerelease: false
-
-      - name: Create Release
-        uses: release-drafter/release-drafter@v6
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_GIT_PUSH_AND_TAG }}
+          allowUpdates: true
+          draft: true
+          makeLatest: true
+          name: ${{ github.ref_name }}
+          body: ${{ steps.changelog.outputs.changes }}
+          token: ${{ secrets.PAT_GIT_PUSH_AND_TAG }}
