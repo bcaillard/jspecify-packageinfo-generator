@@ -24,11 +24,12 @@ jobs:
         id: get_version
         run: |
           mvn $MAVEN_CLI_OPTS build-helper:parse-version versions:set@release
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          VERSION=$(mvn $MAVEN_CLI_OPTS help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "VERSION=$VERSION"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           git config user.name github-actions
           git config user.email github-actions@github.com
+          git status
           git add pom.xml
           git commit -m "build(release): Version $VERSION"
         env:
@@ -45,7 +46,7 @@ jobs:
         run: |
           git reset --head HEAD^
           mvn $MAVEN_CLI_OPTS build-helper:parse-version versions:set@minor
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          VERSION=$(mvn $MAVEN_CLI_OPTS help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "VERSION=$VERSION"
           git add pom.xml
           git commit -m "build(development): Next Development Version $VERSION"
