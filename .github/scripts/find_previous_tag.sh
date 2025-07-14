@@ -45,6 +45,4 @@ else
     REF="$PREVIOUS_TAG"
 fi
 
-SHA=$(git rev-list -n 1 "$REF")
-echo "SHA1 du tag précédent ou de main: $SHA"
-echo $SHA
+echo "previousTag=$PREVIOUS_TAG" >> "$GITHUB_OUTPUT"

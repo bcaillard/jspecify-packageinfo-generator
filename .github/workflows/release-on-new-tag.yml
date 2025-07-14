@@ -52,12 +52,8 @@ jobs:
         id: previous-tag
         run: |
           echo "currentTag: ${{ github.ref_name }}"
-          results=$(git tag -l | sort -r -V)
-          echo "results: $results"
           chmod +x .github/scripts/find_previous_tag.sh
-          previousTag=$(.github/scripts/find_previous_tag.sh ${{ github.ref_name }})
-          echo "previousTag: $previousTag"
-          echo "previousTag=$previousTag" >> "$GITHUB_OUTPUT"
+          .github/scripts/find_previous_tag.sh ${{ github.ref_name }}
 
       - name: Update CHANGELOG
         id: changelog
