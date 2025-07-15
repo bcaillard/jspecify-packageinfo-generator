@@ -4,10 +4,8 @@ on:
   push:
     branches:
       - main
-      - feature/**
   pull_request:
     branches:
-      - main
       - feature/**
 
 jobs:
@@ -35,7 +33,9 @@ jobs:
 
     steps:
       - name: Support longpaths
-        run: git config --system core.longpaths true
+        run: |
+          git config --system core.longpaths true
+          Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -Type DWord
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -51,6 +51,5 @@ jobs:
         shell: bash
         run: |
           mvn $MAVEN_CLI_OPTS verify -Pcoverage
-          cat D:/a/jspecify-packageinfo-generator/jspecify-packageinfo-generator/target/failsafe-reports
         env:
           MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
