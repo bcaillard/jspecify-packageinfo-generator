@@ -49,6 +49,8 @@ jobs:
 
       - name: Build project
         shell: bash
-        run: mvn $MAVEN_CLI_OPTS -X -V verify -Pcoverage
+        run: |
+          mvn $MAVEN_CLI_OPTS verify -Pcoverage
+          cat D:/a/jspecify-packageinfo-generator/jspecify-packageinfo-generator/target/failsafe-reports
         env:
           MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
