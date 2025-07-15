@@ -30,7 +30,7 @@ jobs:
         env:
           MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
 
-  build-on-windoxs:
+  build-on-windows:
     runs-on: windows-latest
 
     steps:
