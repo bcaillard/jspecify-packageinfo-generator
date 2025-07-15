@@ -49,6 +49,6 @@ jobs:
 
       - name: Build project
         shell: bash
-        run: mvn -B verify -Pcoverage
+        run: mvn $MAVEN_CLI_OPTS verify -Pcoverage
         env:
           MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
