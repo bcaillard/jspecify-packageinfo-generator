@@ -26,7 +26,7 @@ jobs:
           cache: maven
 
       - name: Build project
-        run: mvn $Env:MAVEN_CLI_OPTS verify -Pcoverage
+        run: mvn $MAVEN_CLI_OPTS verify -Pcoverage
         env:
           MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
 
@@ -48,6 +48,6 @@ jobs:
           cache: maven
 
       - name: Build project
-        run: mvn $MAVEN_CLI_OPTS verify -Pcoverage
+        run: mvn $Env:MAVEN_CLI_OPTS verify -Pcoverage
         env:
           MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
