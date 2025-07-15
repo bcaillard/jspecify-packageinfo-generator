@@ -30,7 +30,7 @@ class PackageInfoMainJavaAndTestJavaGeneratorMojoIT {
     @MavenGoal("clean")
     @MavenGoal("${project.groupId}:${project.artifactId}:${project.version}:generate-package-info")
     @MavenGoal("${project.groupId}:${project.artifactId}:${project.version}:generate-package-info-test")
-    void generate_from_main_and_test_sources_directories_test_case(final MavenExecutionResult result) throws Exception {
+    void generate_test_case(final MavenExecutionResult result) throws Exception {
         MavenExecutionResultAssert.assertThat(result).isSuccessful();
 
         final MavenProjectResult project = result.getMavenProjectResult();
