@@ -27,7 +27,7 @@ jobs:
           MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
 
       - name: Release Dry Run
-        run: mvn $MAVEN_CLI_OPTS install -Prelease-dry-run
+        run: mvn $MAVEN_CLI_OPTS -X install -Dmaven.test.skip=true -Prelease-dry-run
         env:
           MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
 
