@@ -14,13 +14,21 @@ import static io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.Pa
 
 /** Maven plugin for generating {@code package-info.java} files with JSpecify annotation from java test source directory. */
 @Mojo(name = "generate-package-info-test", defaultPhase = LifecyclePhase.GENERATE_TEST_SOURCES)
-public class JSpecifyPackageInfoTestJavaGeneratorGeneratorMojo extends io.github.bcaillard.jspecifyutilities.packageinfogenerator.plugin.AbstractJSpecifyPackageInfoGeneratorMojo {
+public class JSpecifyPackageInfoTestJavaGeneratorGeneratorMojo extends AbstractJSpecifyPackageInfoGeneratorMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
         final Path testSourceDirectory = Paths.get(project.getBasedir().getPath(), TEST_JAVA_DIRECTORY);
         final Path generatedTestSourcesDirectory = Paths.get(project.getBuild().getDirectory(), TEST_OUTPUT_DIRECTORY);
-        final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(project, getLog(), skip, annotation, testSourceDirectory, generatedTestSourcesDirectory);
+        final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(
+                project,
+                getLog(),
+                skip,
+                annotation,
+                testSourceDirectory,
+                generatedTestSourcesDirectory,
+                whenGeneratedSourcesDirectoryExists
+        );
 
         PackageInfoGeneratorEngine.generate(context);
     }

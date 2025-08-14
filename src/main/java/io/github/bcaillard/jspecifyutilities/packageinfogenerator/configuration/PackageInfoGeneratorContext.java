@@ -1,5 +1,6 @@
 package io.github.bcaillard.jspecifyutilities.packageinfogenerator.configuration;
 
+import io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.generatedsources.GeneratedSourcesDirectoryExistsStrategy;
 import lombok.Data;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
@@ -20,10 +21,12 @@ public class PackageInfoGeneratorContext {
     /** A flag indicating whether the generation process should be skipped. */
     private final boolean skip;
     /** The JSpecifyAnnotationType specifying the null-safety annotation type. */
-    private final io.github.bcaillard.jspecifyutilities.packageinfogenerator.configuration.JSpecifyAnnotationType annotation;
+    private final JSpecifyAnnotationType annotation;
     /** The path to the source directory of the Java files. */
     private final Path sourcesDirectory;
-    /** The path to the directory where the generated {@code {@code package-info.java}} files will be stored. */
+    /** The path to the directory where the generated {@code package-info.java} files will be stored. */
     private final Path generatedSourcesDirectory;
+    /** Strategy to apply when the generated sources directory already exists. */
+    private final GeneratedSourcesDirectoryExistsStrategy whenGeneratedSourcesDirectoryExists;
 
 }

@@ -4,7 +4,7 @@
 
     <groupId>io.github.bcaillard.jspecify-utilities.integration-test</groupId>
     <artifactId>jspecify-packageinfo-generator-maven-plugin-integration-test</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.0.0</version>
     <packaging>jar</packaging>
 
 </project>

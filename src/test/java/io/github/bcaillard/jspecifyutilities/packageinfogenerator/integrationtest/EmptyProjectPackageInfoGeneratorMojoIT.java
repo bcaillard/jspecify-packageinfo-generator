@@ -16,7 +16,7 @@ import java.nio.file.Path;
 /**
  * <p>Tests for {@link io.github.bcaillard.jspecifyutilities.packageinfogenerator.plugin.JSpecifyPackageInfoMainJavaGeneratorGeneratorMojo} and
  * {@link io.github.bcaillard.jspecifyutilities.packageinfogenerator.plugin.JSpecifyPackageInfoTestJavaGeneratorGeneratorMojo}.</p>
- * <p>Should ignore projets and modules without java sources directories.</p>
+ * <p>Should ignore projects and modules without java sources directories.</p>
  */
 @MavenJupiterExtension
 class EmptyProjectPackageInfoGeneratorMojoIT {

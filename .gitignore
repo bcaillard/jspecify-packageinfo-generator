@@ -25,6 +25,7 @@ replay_pid*
 
 # Maven #
 target/
+!/src/test/resources-its/io/github/bcaillard/jspecifyutilities/packageinfogenerator/integrationtest/**/target/**
 !.mvn/wrapper/maven-wrapper.jar
 *.versionsBackup
 

@@ -31,7 +31,7 @@ public class PathUtils {
     }
 
     /**
-     * Checks whether the specified directory contains any Java source files.
+     * Checks if the specified directory contains any Java source files.
      * A Java source file is identified by a file name ending with the ".java" extension.
      *
      * @param path the path to the directory to scan for Java source files
@@ -43,6 +43,21 @@ public class PathUtils {
     public static boolean hasJavaSourceFiles(final Path path) throws IOException {
         try (final Stream<Path> paths = Files.list(path)) {
             return paths.anyMatch(file -> file.toString().endsWith(JAVA_EXTENSION));
+        }
+    }
+
+    /**
+     * Checks if the specified directory is empty (contains no files or subdirectories).
+     *
+     * @param path the path to the directory to check
+     *
+     * @return {@code true} if the directory is empty, {@code false} otherwise
+     *
+     * @throws IOException if an I/O error occurs while accessing the directory
+     */
+    public static boolean isEmptyFolder(final Path path) throws IOException {
+        try (final Stream<Path> entries = Files.list(path)) {
+            return entries.findAny().isEmpty();
         }
     }
 

@@ -20,11 +20,19 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
       - name: Build project
         run: mvn $MAVEN_CLI_OPTS verify -Pcoverage
         env:
           MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
+
+      - name: Release Dry Run
+        run: mvn $MAVEN_CLI_OPTS deploy -Dmaven.test.skip=true -Prelease-dry-run
+        env:
+          MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
   build-on-windows:
     runs-on: windows-latest

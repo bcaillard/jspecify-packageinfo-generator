@@ -1,9 +1,11 @@
 package io.github.bcaillard.jspecifyutilities.packageinfogenerator.core;
 
 import io.github.bcaillard.jspecifyutilities.packageinfogenerator.configuration.PackageInfoGeneratorContext;
+import io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.generatedsources.GeneratedSourcesDirectoryExistsStrategy;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -28,34 +30,19 @@ class PackageInfoGeneratorEngineTest {
     private Path mockSourceDirectory;
 
     @Test
-    void should_skip_generation_when_skip_is_true() throws MojoExecutionException {
+    void should_throw_MojoExecutionException_when_generation_fails() {
         try (final MockedStatic<Files> filesMockedStatic = Mockito.mockStatic(Files.class)) {
             // Arrange
-            final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(null, mockLog, true, null, null, null);
+            final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(null, mockLog, false, null, mockSourceDirectory, null, GeneratedSourcesDirectoryExistsStrategy.RUN);
 
-            // Act
-            io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorEngine.generate(context);
+            filesMockedStatic.when(() -> Files.exists(mockSourceDirectory)).thenReturn(true);
+            filesMockedStatic.when(() -> Files.walkFileTree(any(Path.class), any(JavaPackageVisitor.class)))
+                             .thenThrow(new IllegalArgumentException("Test exception"));
 
-            // Assert
-            filesMockedStatic.verifyNoInteractions();
-            verify(mockLog).info("Skipping package-info.java generation because property 'skip' is set to true");
-        }
-    }
-
-    @Test
-    void should_skip_generation_when_source_directory_does_not_exist() throws MojoExecutionException {
-        try (final MockedStatic<Files> filesMockedStatic = Mockito.mockStatic(Files.class)) {
-            // Arrange
-            final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(null, mockLog, false, null, mockSourceDirectory, null);
-
-            filesMockedStatic.when(() -> Files.exists(mockSourceDirectory)).thenReturn(false);
-
-            // Act
-            io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorEngine.generate(context);
-
-            // Assert
-            filesMockedStatic.verify(() -> Files.walkFileTree(any(Path.class), any(io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.JavaPackageVisitor.class)), never());
-            verify(mockLog).info("Skipping package-info.java generation because there is no sources directory");
+            // Act & Assert
+            Assertions.assertThatCode(() -> PackageInfoGeneratorEngine.generate(context))
+                      .isInstanceOf(MojoExecutionException.class)
+                      .hasMessage("Failed to generate package-info.java files. Error occurred during files generation process");
         }
     }
 
@@ -63,35 +50,55 @@ class PackageInfoGeneratorEngineTest {
     void should_generate_package_info_files_when_source_directory_exists() throws MojoExecutionException {
         try (final MockedStatic<Files> filesMockedStatic = Mockito.mockStatic(Files.class)) {
             // Arrange
-            final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(null, mockLog, false, null, mockSourceDirectory, null);
+            final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(null, mockLog, false, null, mockSourceDirectory, null, GeneratedSourcesDirectoryExistsStrategy.RUN);
 
             filesMockedStatic.when(() -> Files.exists(mockSourceDirectory)).thenReturn(true);
 
             // Act
-            io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorEngine.generate(context);
+            PackageInfoGeneratorEngine.generate(context);
 
             // Assert
-            filesMockedStatic.verify(() -> Files.walkFileTree(any(Path.class), any(io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.JavaPackageVisitor.class)));
+            filesMockedStatic.verify(() -> Files.walkFileTree(any(Path.class), any(JavaPackageVisitor.class)));
             verify(mockLog).debug("Generating package-info.java files");
             verify(mockLog).debug("All package-info.java files have been generated");
         }
     }
 
-    @Test
-    void should_throw_MojoExecutionException_when_generation_fails() {
-        try (final MockedStatic<Files> filesMockedStatic = Mockito.mockStatic(Files.class)) {
-            // Arrange
-            final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(null, mockLog, false, null, mockSourceDirectory, null);
+    @Nested
+    class SkipGenerationTest {
 
-            filesMockedStatic.when(() -> Files.exists(mockSourceDirectory)).thenReturn(true);
-            filesMockedStatic.when(() -> Files.walkFileTree(any(Path.class), any(io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.JavaPackageVisitor.class)))
-                             .thenThrow(new IllegalArgumentException("Test exception"));
+        @Test
+        void should_skip_generation_when_skip_is_true() throws MojoExecutionException {
+            try (final MockedStatic<Files> filesMockedStatic = Mockito.mockStatic(Files.class)) {
+                // Arrange
+                final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(null, mockLog, true, null, null, null, GeneratedSourcesDirectoryExistsStrategy.RUN);
 
-            // Act & Assert
-            Assertions.assertThatCode(() -> io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorEngine.generate(context))
-                      .isInstanceOf(MojoExecutionException.class)
-                      .hasMessage("Failed to generate package-info.java files. Error occurred during files generation process");
+                // Act
+                PackageInfoGeneratorEngine.generate(context);
+
+                // Assert
+                filesMockedStatic.verifyNoInteractions();
+                verify(mockLog).info("Skipping package-info.java generation because property 'skip' is set to true");
+            }
         }
+
+        @Test
+        void should_skip_generation_when_source_directory_does_not_exist() throws MojoExecutionException {
+            try (final MockedStatic<Files> filesMockedStatic = Mockito.mockStatic(Files.class)) {
+                // Arrange
+                final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(null, mockLog, false, null, mockSourceDirectory, null, GeneratedSourcesDirectoryExistsStrategy.RUN);
+
+                filesMockedStatic.when(() -> Files.exists(mockSourceDirectory)).thenReturn(false);
+
+                // Act
+                PackageInfoGeneratorEngine.generate(context);
+
+                // Assert
+                filesMockedStatic.verify(() -> Files.walkFileTree(any(Path.class), any(JavaPackageVisitor.class)), never());
+                verify(mockLog).info("Skipping package-info.java generation because there is no sources directory");
+            }
+        }
+
     }
 
 }
