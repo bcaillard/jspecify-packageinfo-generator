@@ -1,6 +1,5 @@
 package io.github.bcaillard.jspecifyutilities.packageinfogenerator.integrationtest;
 
-import com.soebes.itf.extension.assertj.LogAssert;
 import com.soebes.itf.extension.assertj.MavenExecutionResultAssert;
 import com.soebes.itf.jupiter.extension.MavenCLIOptions;
 import com.soebes.itf.jupiter.extension.MavenGoal;
@@ -47,14 +46,11 @@ public class GenerationAlreadyPerformedIT {
     @SystemProperty(value = "whenGeneratedSourcesDirectoryExists", content = "RUN")
     @MavenGoal("${project.groupId}:${project.artifactId}:${project.version}:generate-package-info")
     void should_run_generation_test_case(final MavenExecutionResult result) {
-        final LogAssert logAsssert = MavenExecutionResultAssert.assertThat(result)
-                                                               .isSuccessful()
-                                                               .out();
-        logAsssert.debug()
-                  .contains("The process continues despite the existence of the generated sources directory, because 'whenGeneratedSourcesDirectoryExists=RUN'");
-        logAsssert.info()
-                  .contains("Ignore generation for file /Users/bcaillard/Developer/Sources/jspecify-packageinfo-generator/target/maven-it/io/github/bcaillard/jspecifyutilities/packageinfogenerator/integrationtest/GenerationAlreadyPerformedIT/should_run_generation_test_case/project/target/generated-sources/annotations/packages-info/com/acme/app/package-info.java")
-        ;
+        MavenExecutionResultAssert.assertThat(result)
+                                  .isSuccessful()
+                                  .out()
+                                  .debug()
+                                  .contains("The process continues despite the existence of the generated sources directory, because 'whenGeneratedSourcesDirectoryExists=RUN'");
     }
 
 }
