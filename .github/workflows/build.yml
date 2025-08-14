@@ -20,6 +20,8 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
       - name: Build project
         run: mvn $MAVEN_CLI_OPTS verify -Pcoverage
@@ -30,6 +32,7 @@ jobs:
         run: mvn $MAVEN_CLI_OPTS -X install -Dmaven.test.skip=true -Prelease-dry-run
         env:
           MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
   build-on-windows:
     runs-on: windows-latest
