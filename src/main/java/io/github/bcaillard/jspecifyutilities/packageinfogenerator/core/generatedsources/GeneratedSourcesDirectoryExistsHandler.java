@@ -8,8 +8,7 @@ import java.nio.file.Path;
 import java.util.EnumMap;
 
 /**
- * Utility class responsible for handling the existence of the generated sources directory based on the specified {@link GeneratedSourcesDirectoryExistsStrategy}.
- * </p>
+ * <p>Utility class responsible for handling the existence of the generated sources directory based on the specified {@link GeneratedSourcesDirectoryExistsStrategy}.</p>
  * Available strategies include:<br>
  * <ul>
  * <li><code>SKIP</code>: The operation is skipped if the directory exists.</li>
