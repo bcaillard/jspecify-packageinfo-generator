@@ -20,7 +20,15 @@ public class JSpecifyPackageInfoTestJavaGeneratorGeneratorMojo extends AbstractJ
     public void execute() throws MojoExecutionException {
         final Path testSourceDirectory = Paths.get(project.getBasedir().getPath(), TEST_JAVA_DIRECTORY);
         final Path generatedTestSourcesDirectory = Paths.get(project.getBuild().getDirectory(), TEST_OUTPUT_DIRECTORY);
-        final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(project, getLog(), skip, annotation, testSourceDirectory, generatedTestSourcesDirectory);
+        final PackageInfoGeneratorContext context = new PackageInfoGeneratorContext(
+                project,
+                getLog(),
+                skip,
+                annotation,
+                testSourceDirectory,
+                generatedTestSourcesDirectory,
+                whenGeneratedSourcesDirectoryExists
+        );
 
         PackageInfoGeneratorEngine.generate(context);
     }

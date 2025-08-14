@@ -1,5 +1,6 @@
 package io.github.bcaillard.jspecifyutilities.packageinfogenerator.configuration;
 
+import io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.generatedsources.GeneratedSourcesDirectoryExistsStrategy;
 import lombok.Data;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
@@ -25,5 +26,7 @@ public class PackageInfoGeneratorContext {
     private final Path sourcesDirectory;
     /** The path to the directory where the generated {@code package-info.java} files will be stored. */
     private final Path generatedSourcesDirectory;
+    /** Strategy to apply when the generated sources directory already exists. */
+    private final GeneratedSourcesDirectoryExistsStrategy whenGeneratedSourcesDirectoryExists;
 
 }

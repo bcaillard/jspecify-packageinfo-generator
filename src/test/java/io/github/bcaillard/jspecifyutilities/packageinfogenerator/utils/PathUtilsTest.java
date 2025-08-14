@@ -122,4 +122,60 @@ class PathUtilsTest {
 
     }
 
+    /** Tests for {@link PathUtils#isEmptyFolder(Path)}. */
+    @Nested
+    class IsEmptyFolder {
+
+        @Test
+        void should_return_true_when_directory_is_empty() throws IOException {
+            // Arrange
+            final Path tempDir = Files.createTempDirectory("emptyDir");
+
+            // Act
+            final boolean actual = PathUtils.isEmptyFolder(tempDir);
+
+            // Assert
+            assertThat(actual).isTrue();
+
+            // Cleanup
+            Files.deleteIfExists(tempDir);
+        }
+
+        @Test
+        void should_return_false_when_directory_contains_files() throws IOException {
+            // Arrange
+            final Path tempDir = Files.createTempDirectory("nonEmptyDir");
+            final Path file = tempDir.resolve("file.txt");
+            Files.createFile(file);
+
+            // Act
+            final boolean actual = PathUtils.isEmptyFolder(tempDir);
+
+            // Assert
+            assertThat(actual).isFalse();
+
+            // Cleanup
+            Files.deleteIfExists(file);
+            Files.deleteIfExists(tempDir);
+        }
+
+        @Test
+        void should_return_false_when_directory_contains_subdirectories() throws IOException {
+            // Arrange
+            final Path tempDir = Files.createTempDirectory("dirWithSubdir");
+            final Path subDir = Files.createDirectory(tempDir.resolve("subdir"));
+
+            // Act
+            final boolean actual = PathUtils.isEmptyFolder(tempDir);
+
+            // Assert
+            assertThat(actual).isFalse();
+
+            // Cleanup
+            Files.deleteIfExists(subDir);
+            Files.deleteIfExists(tempDir);
+        }
+
+    }
+
 }

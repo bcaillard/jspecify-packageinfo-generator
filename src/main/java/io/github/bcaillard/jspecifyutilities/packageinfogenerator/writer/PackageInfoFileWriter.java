@@ -44,11 +44,11 @@ public class PackageInfoFileWriter {
         final Path packageInfoFile = packageInfoFolder.resolve(PACKAGE_INFO_FILENAME);
         logger.debug("Generated Package Info: " + packageInfoFile);
 
-        // Détermine le nom du package à partir du chemin source
+        // Determine the package name from the source path
         final String packageNameOnly = packagePath.replace(File.separatorChar, PACKAGE_SEPARATOR);
         logger.debug("Java package of Package Info: " + packageNameOnly);
 
-        // Écriture du contenu dans package-info.java
+        // Writing content in package-info.java
         try {
             Files.createDirectories(packageInfoFolder);
             logger.debug(String.format("Directories created: %s", packageInfoFolder));
@@ -59,8 +59,7 @@ public class PackageInfoFileWriter {
             Files.write(packageInfoFile, PackageInfoTemplateFileProvider.provideContent(context.getAnnotation().getAnnotationName(), packageNameOnly));
             logger.info(String.format("Created package-info.java with @%s annotation in package: %s", context.getAnnotation().getAnnotationName(), packageNameOnly));
         } catch (final FileAlreadyExistsException faee) {
-// TODO skip silently
-            logger.warn(faee.getMessage());
+            logger.info("Ignore generation for file " + faee.getMessage());
         } catch (final IOException ioe) {
             logger.error(String.format("Failed to write package-info.java files: %s", ioe.getMessage()));
             throw new CantCreatePackageInfoException("Failed to write package-info.java files", ioe);
