@@ -22,7 +22,12 @@ jobs:
           cache: maven
 
       - name: Build project
-        run: mvn $MAVEN_CLI_OPTS verify -Pcoverage,release-dry-run
+        run: mvn $MAVEN_CLI_OPTS verify -Pcoverage
+        env:
+          MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
+
+      - name: Release Dry Run
+        run: mvn $MAVEN_CLI_OPTS install -Prelease-dry-run
         env:
           MAVEN_CLI_OPTS: ${{ vars.MAVEN_CLI_OPTS }}
 
