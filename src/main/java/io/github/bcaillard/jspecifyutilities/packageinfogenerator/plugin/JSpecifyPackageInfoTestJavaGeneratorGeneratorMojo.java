@@ -14,7 +14,7 @@ import static io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.Pa
 
 /** Maven plugin for generating {@code package-info.java} files with JSpecify annotation from java test source directory. */
 @Mojo(name = "generate-package-info-test", defaultPhase = LifecyclePhase.GENERATE_TEST_SOURCES)
-public class JSpecifyPackageInfoTestJavaGeneratorGeneratorMojo extends io.github.bcaillard.jspecifyutilities.packageinfogenerator.plugin.AbstractJSpecifyPackageInfoGeneratorMojo {
+public class JSpecifyPackageInfoTestJavaGeneratorGeneratorMojo extends AbstractJSpecifyPackageInfoGeneratorMojo {
 
     @Override
     public void execute() throws MojoExecutionException {

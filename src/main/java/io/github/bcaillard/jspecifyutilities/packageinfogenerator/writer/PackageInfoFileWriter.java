@@ -6,6 +6,7 @@ import org.apache.maven.plugin.logging.Log;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,7 +27,7 @@ public class PackageInfoFileWriter {
      * @param context the context containing configuration and resources needed for package info generation, such as source and output directories, annotations, and logging utilities
      * @param fromJavaPackage the path representing the full directory of the Java package for which the {@code package-info.java} file will be created
      *
-     * @throws io.github.bcaillard.jspecifyutilities.packageinfogenerator.writer.CantCreatePackageInfoException if an exception occurs during the creation or writing of the {@code package-info.java}
+     * @throws CantCreatePackageInfoException if an exception occurs during the creation or writing of the {@code package-info.java}
      * file
      */
     public static void createPackageInfo(final PackageInfoGeneratorContext context, final Path fromJavaPackage) {
@@ -55,12 +56,14 @@ public class PackageInfoFileWriter {
             Files.createFile(packageInfoFile);
             logger.debug(String.format("Empty package-info.java created: %s", packageInfoFile));
 
-            Files.write(packageInfoFile, io.github.bcaillard.jspecifyutilities.packageinfogenerator.writer.PackageInfoTemplateFileProvider.provideContent(context.getAnnotation()
-                                                                                                                                                                 .getAnnotationName(), packageNameOnly));
+            Files.write(packageInfoFile, PackageInfoTemplateFileProvider.provideContent(context.getAnnotation().getAnnotationName(), packageNameOnly));
             logger.info(String.format("Created package-info.java with @%s annotation in package: %s", context.getAnnotation().getAnnotationName(), packageNameOnly));
+        } catch (final FileAlreadyExistsException faee) {
+// TODO skip silently
+            logger.warn(faee.getMessage());
         } catch (final IOException ioe) {
             logger.error(String.format("Failed to write package-info.java files: %s", ioe.getMessage()));
-            throw new io.github.bcaillard.jspecifyutilities.packageinfogenerator.writer.CantCreatePackageInfoException("Failed to write package-info.java files", ioe);
+            throw new CantCreatePackageInfoException("Failed to write package-info.java files", ioe);
         }
     }
 
