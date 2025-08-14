@@ -52,6 +52,8 @@ Add the plugin to your `pom.xml`:
                 <skip>false</skip>
                 <!-- JSpecify annotation to be added to each package-info.java. Choose between NULL_MARKED and NULL_UNMARKED (optional, default is NULL_MARKED) -->
                 <annotation>NULL_UNMARKED</annotation>
+                <!-- Strategy to apply when the generated sources directory already exists [RUN, FAIL, SKIP] (optional, default is SKIP) -->
+                <whenGeneratedSourcesDirectoryExists>RUN</whenGeneratedSourcesDirectoryExists>
             </configuration>
         </plugin>
     </plugins>
