@@ -9,9 +9,9 @@ import java.util.EnumMap;
 
 /**
  * Utility class responsible for handling the existence of the generated sources directory based on the specified {@link GeneratedSourcesDirectoryExistsStrategy}.
- * <p>
- * <ul>
+ * </p>
  * Available strategies include:<br>
+ * <ul>
  * <li><code>SKIP</code>: The operation is skipped if the directory exists.</li>
  * <li><code>FAIL</code>: An exception is thrown if the directory exists.</li>
  * <li><code>RUN</code>: The operation continues regardless of whether the directory exists.</li>
