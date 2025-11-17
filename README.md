@@ -13,6 +13,7 @@ If you discover JSpecify, remember to take a look at [NullAway](https://github.c
 - Automatically creates `package-info.java` files in packages that are missing them
 - Adds `@NullMarked` or `@NullUnmarked` from JSpecify to support null-safety adoption
 - Reduces repetitive manual work when migrating to JSpecify
+- Automatically adds generated directories to Maven source roots so they are compiled
 
 ## Requirements
 

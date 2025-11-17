@@ -31,6 +31,12 @@ public class JSpecifyPackageInfoTestJavaGeneratorGeneratorMojo extends AbstractJ
         );
 
         PackageInfoGeneratorEngine.generate(context);
+
+        // Detect and then add generated test sources directory as test source root if package-info.java files were produced
+        if (hasGeneratedPackageInfoFiles(generatedTestSourcesDirectory)) {
+            project.addTestCompileSourceRoot(generatedTestSourcesDirectory.toString());
+            getLog().info("Added generated test sources directory to test source roots: " + generatedTestSourcesDirectory);
+        }
     }
 
 }

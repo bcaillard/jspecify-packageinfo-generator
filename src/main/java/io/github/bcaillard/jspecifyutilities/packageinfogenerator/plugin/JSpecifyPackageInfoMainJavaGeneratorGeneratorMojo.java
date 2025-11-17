@@ -31,6 +31,12 @@ public class JSpecifyPackageInfoMainJavaGeneratorGeneratorMojo extends AbstractJ
         );
 
         PackageInfoGeneratorEngine.generate(context);
+
+        // Detect and then add generated sources directory as source root if package-info.java files were produced
+        if (hasGeneratedPackageInfoFiles(generatedSourcesDirectory)) {
+            project.addCompileSourceRoot(generatedSourcesDirectory.toString());
+            getLog().info("Added generated sources directory to compile source roots: " + generatedSourcesDirectory);
+        }
     }
 
 }
