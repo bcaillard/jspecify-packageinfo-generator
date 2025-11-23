@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/** Tests for {@link io.github.bcaillard.jspecifyutilities.packageinfogenerator.writer.PackageInfoTemplateFileProvider}. */
+/** Tests for {@link PackageInfoTemplateFileProvider}. */
 class PackageInfoTemplateFileProviderTest {
 
     @Test
@@ -17,7 +17,7 @@ class PackageInfoTemplateFileProviderTest {
         final String packageNameOnly = "com.example.test";
 
         // Act
-        final byte[] actual = io.github.bcaillard.jspecifyutilities.packageinfogenerator.writer.PackageInfoTemplateFileProvider.provideContent(annotationName, packageNameOnly);
+        final byte[] actual = PackageInfoTemplateFileProvider.provideContent(annotationName, packageNameOnly);
 
         // Assert
         assertThat(new String(actual, StandardCharsets.UTF_8).split(System.lineSeparator()))
