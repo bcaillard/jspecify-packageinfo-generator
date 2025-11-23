@@ -19,12 +19,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
-/** Tests for {@link io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.JavaPackageVisitor}. */
+/** Tests for {@link JavaPackageVisitor}. */
 @ExtendWith(MockitoExtension.class)
 class JavaPackageVisitorTest {
 
     @InjectMocks
-    private io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.JavaPackageVisitor javaPackageVisitor;
+    private JavaPackageVisitor javaPackageVisitor;
     @Mock
     @SuppressWarnings("unused")
     private Log mockLog;
@@ -38,7 +38,7 @@ class JavaPackageVisitorTest {
     @Test
     void should_skip_java_package_when_it_already_contains_PackageInfo() throws IOException {
         // Arrange
-        final Path packageInfoFile = tmpDir.resolve(io.github.bcaillard.jspecifyutilities.packageinfogenerator.core.PackageInfoGeneratorConstants.PACKAGE_INFO_FILENAME);
+        final Path packageInfoFile = tmpDir.resolve(PackageInfoGeneratorConstants.PACKAGE_INFO_FILENAME);
         Files.createFile(packageInfoFile);
 
         // Act

@@ -13,6 +13,7 @@ If you discover JSpecify, remember to take a look at [NullAway](https://github.c
 - Automatically creates `package-info.java` files in packages that are missing them
 - Adds `@NullMarked` or `@NullUnmarked` from JSpecify to support null-safety adoption
 - Reduces repetitive manual work when migrating to JSpecify
+- Automatically adds generated directories to Maven source roots so they are compiled (thanks to [@jjlharrison](https://github.com/jjlharrison))
 
 ## Requirements
 
@@ -36,12 +37,12 @@ Add the plugin to your `pom.xml`:
                     <goals>
                         <!-- 
                             Whether you want to generate package-java.info files from src/main/java.
-                            package-info.java are generated in /target/generated-sources/annotations/packages-info/ folder.
+                            package-info.java are generated in /target/generated-sources/packages-info/ folder.
                         -->
                         <goal>generate-package-info</goal>
                         <!-- 
                             Whether you want to generate package-java.info files from src/test/java. 
-                            package-info.java are generated in /target/generated-test-sources/test-annotations/packages-info/ folder.
+                            package-info.java are generated in /target/generated-test-sources/packages-info/ folder.
                         -->
                         <goal>generate-package-info-test</goal>
                     </goals>
@@ -54,6 +55,8 @@ Add the plugin to your `pom.xml`:
                 <annotation>NULL_UNMARKED</annotation>
                 <!-- Strategy to apply when the generated sources directory already exists [RUN, FAIL, SKIP] (optional, default is SKIP) -->
                 <whenGeneratedSourcesDirectoryExists>RUN</whenGeneratedSourcesDirectoryExists>
+                <!-- Whether to add the generated sources as compile source root (optional, default is true) -->
+                <addGeneratedSourcesToSourceRoot>false</addGeneratedSourcesToSourceRoot>
             </configuration>
         </plugin>
     </plugins>

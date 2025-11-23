@@ -24,7 +24,7 @@ class PathUtilsTest {
             final Path nonExistentDir = Path.of("non-existent-dir");
 
             // Act
-            final boolean actual = io.github.bcaillard.jspecifyutilities.packageinfogenerator.utils.PathUtils.isPackageInfoFileExists(nonExistentDir);
+            final boolean actual = PathUtils.isPackageInfoFileExists(nonExistentDir);
 
             // Assert
             assertFalse(actual, "Expected package-info.java to not exist in a non-existent directory.");
@@ -38,7 +38,7 @@ class PathUtilsTest {
             Files.createFile(packageInfoFile);
 
             // Act
-            final boolean actual = io.github.bcaillard.jspecifyutilities.packageinfogenerator.utils.PathUtils.isPackageInfoFileExists(tempDir);
+            final boolean actual = PathUtils.isPackageInfoFileExists(tempDir);
 
             // Assert
             assertTrue(actual, "Expected package-info.java to exist, but it was not found.");
@@ -54,7 +54,7 @@ class PathUtilsTest {
             final Path tempDir = Files.createTempDirectory("testDir");
 
             // Act
-            final boolean actual = io.github.bcaillard.jspecifyutilities.packageinfogenerator.utils.PathUtils.isPackageInfoFileExists(tempDir);
+            final boolean actual = PathUtils.isPackageInfoFileExists(tempDir);
 
             // Assert
             assertFalse(actual, "Expected package-info.java to not exist, but it was found.");
@@ -77,7 +77,7 @@ class PathUtilsTest {
             Files.createFile(javaFile);
 
             // Act
-            final boolean actual = io.github.bcaillard.jspecifyutilities.packageinfogenerator.utils.PathUtils.hasJavaSourceFiles(tempDir);
+            final boolean actual = PathUtils.hasJavaSourceFiles(tempDir);
 
             // Assert
             assertThat(actual).isTrue();
@@ -95,7 +95,7 @@ class PathUtilsTest {
             Files.createFile(nonJavaFile);
 
             // Act
-            final boolean actual = io.github.bcaillard.jspecifyutilities.packageinfogenerator.utils.PathUtils.hasJavaSourceFiles(tempDir);
+            final boolean actual = PathUtils.hasJavaSourceFiles(tempDir);
 
             // Assert
             assertThat(actual).isFalse();
@@ -111,7 +111,7 @@ class PathUtilsTest {
             final Path tempDir = Files.createTempDirectory("emptyTestDir");
 
             // Act
-            final boolean actual = io.github.bcaillard.jspecifyutilities.packageinfogenerator.utils.PathUtils.hasJavaSourceFiles(tempDir);
+            final boolean actual = PathUtils.hasJavaSourceFiles(tempDir);
 
             // Assert
             assertThat(actual).isFalse();
