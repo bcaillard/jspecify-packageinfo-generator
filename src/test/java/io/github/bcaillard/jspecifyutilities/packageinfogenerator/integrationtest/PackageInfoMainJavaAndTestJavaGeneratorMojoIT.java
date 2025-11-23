@@ -35,8 +35,8 @@ class PackageInfoMainJavaAndTestJavaGeneratorMojoIT {
 
         final MavenProjectResult project = result.getMavenProjectResult();
         final Path targetProjectDirectory = project.getTargetProjectDirectory();
-        final Path targetGeneratedSourcesPath = targetProjectDirectory.resolve("target/generated-sources/annotations/packages-info");
-        final Path targetGeneratedTestSourcesPath = targetProjectDirectory.resolve("target/generated-test-sources/test-annotations/packages-info");
+        final Path targetGeneratedSourcesPath = targetProjectDirectory.resolve("target/generated-sources/packages-info");
+        final Path targetGeneratedTestSourcesPath = targetProjectDirectory.resolve("target/generated-test-sources/packages-info");
 
         final List<Path> generatedSourcesPathToCheck = List.of(targetGeneratedSourcesPath, targetGeneratedTestSourcesPath);
         final List<String> packagesToCheck = List.of(

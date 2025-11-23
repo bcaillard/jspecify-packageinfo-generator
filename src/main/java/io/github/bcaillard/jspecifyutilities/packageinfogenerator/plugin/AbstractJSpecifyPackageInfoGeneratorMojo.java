@@ -21,5 +21,8 @@ public abstract class AbstractJSpecifyPackageInfoGeneratorMojo extends AbstractM
     /** Strategy to apply when the generated sources directory already exists. */
     @Parameter(property = "whenGeneratedSourcesDirectoryExists", defaultValue = "SKIP")
     protected GeneratedSourcesDirectoryExistsStrategy whenGeneratedSourcesDirectoryExists;
+    /** Whether to add the generated sources as compile source root. */
+    @Parameter(property = "addToSourceRoot", defaultValue = "true")
+    protected boolean addGeneratedSourcesToSourceRoot;
 
 }

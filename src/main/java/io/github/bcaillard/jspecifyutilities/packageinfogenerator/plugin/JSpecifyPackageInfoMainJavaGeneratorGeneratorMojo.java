@@ -31,6 +31,11 @@ public class JSpecifyPackageInfoMainJavaGeneratorGeneratorMojo extends AbstractJ
         );
 
         PackageInfoGeneratorEngine.generate(context);
+
+        if (addGeneratedSourcesToSourceRoot) {
+            project.addCompileSourceRoot(generatedSourcesDirectory.toString());
+            getLog().info("Added generated sources directory to compile source roots: " + generatedSourcesDirectory);
+        }
     }
 
 }
