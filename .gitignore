@@ -24,9 +24,9 @@ hs_err_pid*
 replay_pid*
 
 # Maven #
-!/src/test/resources-its/io/github/bcaillard/jspecifyutilities/packageinfogenerator/integrationtest/**/target/**
-!.mvn/wrapper/maven-wrapper.jar
 target/
+!/src/test/resources-its/io/github/bcaillard/jspecifyutilities/packageinfogenerator/integrationtest/**/target
+!.mvn/wrapper/maven-wrapper.jar
 *.versionsBackup
 
 # Idea #
